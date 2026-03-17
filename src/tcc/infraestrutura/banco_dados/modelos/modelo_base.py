@@ -11,4 +11,3 @@ class ModeloBase(Base):
     __abstract__ = True
 
     criado_em = Column(DateTime, nullable=False, default=datetime.now)
-  
