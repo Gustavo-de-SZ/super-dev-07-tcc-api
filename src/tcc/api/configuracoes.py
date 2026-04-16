@@ -33,11 +33,11 @@ class Configuracoes(BaseSettings):
         case_sensitive=False
     )
     @property
-    def eh_producao(self) -> bool:
+    def prod(self) -> bool:
         return self.AMBIENTE.lower() == "prod"
     @property
     def swagger_habilitado(self) -> bool:
-        return not self.eh_producao
+        return not self.prod
 
 
 
