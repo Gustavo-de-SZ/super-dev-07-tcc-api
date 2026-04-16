@@ -11,7 +11,7 @@ from src.tcc.infraestrutura.banco_dados.conexao import obter_sessao
 from src.tcc.api.schemas.usuario_schema import UsuarioCriarRequest, UsuarioAlterarRequest, UsuarioResponse
 
 router = APIRouter(
-    prefix="/usuarios",
+    prefix="/users",
     tags=["Usuários"] 
 )
 
@@ -78,7 +78,7 @@ def inativar_usuario(id: int, session: Session = Depends(obter_sessao)):
 )
 def alterar_usuario(id: int, dados: UsuarioAlterarRequest, session: Session = Depends(obter_sessao)): 
     repositorio = RepositorioUsuario(session)
-    alterou = repositorio.editar(id, dados.email) 
+    alterou = repositorio.editar(id, dados.email, dados.tipo_perfil.value) 
     if not alterou:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Usuario não encontrado")
 

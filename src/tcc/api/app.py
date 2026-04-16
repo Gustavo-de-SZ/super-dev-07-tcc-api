@@ -19,12 +19,12 @@ logger = logging.getLogger(__name__)
 
 
 def criar_aplicacao() -> FastAPI:
-    if configuracoes.eh_producao:
+    if configuracoes.prod:
         logger.info("Iniciando aplicação em modo PRODUÇÂO (Swagger desabilitado)")
         app = FastAPI(
-            docs_url=True,      # Desabilita /docs
-            redoc_url=True,     # Desabilita /redoc
-            openapi_url=True    # Desabilita /openapi.json
+            docs_url=True,      #
+            redoc_url=True,     
+            openapi_url=True    
         )
     else:
         logger.info("Iniciando aplicação em modo DESENVOLVIMENTO (Swagger habilitado)")
@@ -41,7 +41,7 @@ def criar_aplicacao() -> FastAPI:
 
     logger.info("Registrando rotas")
     
-    app.include_router(user_rotas.router, prefix="/users", tags=["Usuários"])
+    app.include_router(user_rotas.router)
 
 
     @app.get("/health", tags=["Sistema"], summary="Health check", description="Verificando se a API está respondendo")
