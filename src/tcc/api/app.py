@@ -1,7 +1,7 @@
 import logging
 from fastapi import FastAPI
 from src.tcc.api.configuracoes import configuracoes
-from src.tcc.api.rotas import user_rotas
+from src.tcc.api.rotas import user_rotas, cliente_rotas, profissional_rotas
 from src.tcc.infraestrutura.banco_dados.conexao import engine
 from src.tcc.infraestrutura.banco_dados.modelos.modelo_base import Base
 
@@ -42,6 +42,8 @@ def criar_aplicacao() -> FastAPI:
     logger.info("Registrando rotas")
     
     app.include_router(user_rotas.router)
+    app.include_router(cliente_rotas.router)
+    app.include_router(profissional_rotas.router)
 
 
     @app.get("/health", tags=["Sistema"], summary="Health check", description="Verificando se a API está respondendo")
