@@ -4,11 +4,10 @@ import enum
 from .modelo_base import ModeloBase
 
 class StatusChamado(enum.Enum):
-    ABERTO = "ABERTO"             # Criado pelo cliente
-    EM_ORCAMENTO = "EM_ORCAMENTO" # Profissional analisando
-    EM_ANDAMENTO = "EM_ANDAMENTO" # Serviço sendo executado
-    CONCLUIDO = "CONCLUIDO"       # Finalizado
-    CANCELADO = "CANCELADO"       # Interrompido
+    ABERTO = "ABERTO"             
+    EM_ANDAMENTO = "EM_ANDAMENTO" 
+    CONCLUIDO = "CONCLUIDO"       
+    CANCELADO = "CANCELADO"       
 
 class ModeloChamado(ModeloBase):
     """Mapeia os tickets de suporte e solicitações de serviço"""

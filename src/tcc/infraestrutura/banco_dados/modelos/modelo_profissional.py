@@ -6,13 +6,13 @@ class ModeloProfissional(ModeloBase):
     __tablename__ = "profissionais"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    usuario_id = Column(Integer, ForeignKey("usuarios.id", ondelete="CASCADE"), nullable=False)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id", ondelete="CASCADE"), nullable=False, unique=True)
     
     nome_fantasia = Column(String(255), nullable=False)
-    cnpj_cpf = Column(String(18), unique=True, nullable=False)
+    documento = Column(String(20), unique=True, nullable=False)
     telefone = Column(String(20), nullable=False)
-    bio = Column(Text, nullable=True)
-    ativo = Column(Boolean, default=True) 
+    descricao_servicos = Column(Text, nullable=True)
+    aprovado_pelo_admin = Column(Boolean, default=False)
 
     usuario = relationship("ModeloUsuario", back_populates="profissional")
     itens_inventario = relationship("ModeloInventario", back_populates="profissional")
