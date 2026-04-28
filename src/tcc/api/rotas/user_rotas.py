@@ -47,12 +47,15 @@ def listar_usuarios(session: Session = Depends(obter_sessao)):
     usuarios = repositorio.listar()
     return usuarios
 
+
 @router.get(
     "/{id}",
     response_model=UsuarioResponse,
     status_code=status.HTTP_200_OK,
     summary="Buscar usuario filtrando pelo ID"
 )
+
+
 def buscar_usuario(id: int, session: Session = Depends(obter_sessao)):
     repositorio = RepositorioUsuario(session)
     usuario = repositorio.buscar_por_id(id)
@@ -63,14 +66,28 @@ def buscar_usuario(id: int, session: Session = Depends(obter_sessao)):
 @router.delete(
     "/{id}",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Inativar usuario"
+    summary="Inativar/usuario"
 )
+
+
 def inativar_usuario(id: int, session: Session = Depends(obter_sessao)): 
     repositorio = RepositorioUsuario(session)
     inativou = repositorio.remover(id)
     if not inativou:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Usuario não encontrado")
-
+    
+    
+def deletar_usuario(id: int, session: Session = Depends(obter_sessao)):
+    repositorio = RepositorioUsuario(session)
+    deletou = repositorio.deletar(id)
+    if not deletou:
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Usuario não encontrado")
+    
+@router.delete(
+    "/{id}/deletar",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Deletar usuario"
+)
 @router.put(
     "/{id}",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -81,12 +98,15 @@ def alterar_usuario(id: int, dados: UsuarioAlterarRequest, session: Session = De
     alterou = repositorio.editar(id, dados.email, dados.tipo_perfil.value) 
     if not alterou:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Usuario não encontrado")
+    
 
 @router.put(
     "/{id}/ativar",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Ativar usuario"
 )
+
+
 def ativar_usuario(id: int, session: Session = Depends(obter_sessao)): 
     repositorio = RepositorioUsuario(session)
     ativou = repositorio.ativar(id)
