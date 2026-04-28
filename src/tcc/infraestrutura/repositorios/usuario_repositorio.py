@@ -30,6 +30,16 @@ class RepositorioUsuario:
         usuario.ativo = False
         self.sessao.commit()
         return True
+    
+    
+    def deletar(self, id: int):
+        usuario = self.sessao.query(ModeloUsuario).filter(ModeloUsuario.id == id).first()
+        if not usuario:
+            return False
+        
+        self.sessao.delete(usuario)
+        self.sessao.commit()
+        return True
 
     def ativar(self, id: int):
         usuario = self.sessao.query(ModeloUsuario).filter(ModeloUsuario.id == id).first()
