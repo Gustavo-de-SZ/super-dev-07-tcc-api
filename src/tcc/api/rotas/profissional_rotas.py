@@ -28,7 +28,7 @@ def criar_profissional(
             email=dados.email,
             senha_hash=dados.senha,
             nome_fantasia=dados.nome_fantasia,
-            documento=dados.documento,
+            cpf=dados.cpf,
             telefone=dados.telefone,
             descricao_servicos=dados.descricao_servicos
         )
@@ -40,10 +40,10 @@ def criar_profissional(
                 status_code=status.HTTP_409_CONFLICT,
                 detail="Email já cadastrado"
             )
-        elif "documento" in str(e):
+        elif "cpf" in str(e):
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
-                detail="Documento já cadastrado"
+                detail="CPF já cadastrado"
             )
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,

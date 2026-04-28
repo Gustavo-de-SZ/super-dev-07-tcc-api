@@ -6,7 +6,7 @@ class RepositorioProfissional:
     def __init__(self, sessao: Session):
         self.sessao = sessao
 
-    def criar(self, email: str, senha_hash: str, nome_fantasia: str, documento: str, telefone: str, descricao_servicos: str | None = None) -> ModeloProfissional:
+    def criar(self, email: str, senha_hash: str, nome_fantasia: str, cpf: str, telefone: str, descricao_servicos: str | None = None) -> ModeloProfissional:
         usuario = ModeloUsuario(
             email=email,
             senha_hash=senha_hash,
@@ -19,7 +19,7 @@ class RepositorioProfissional:
         profissional = ModeloProfissional(
             usuario_id=usuario.id,
             nome_fantasia=nome_fantasia,
-            documento=documento,
+            cpf=cpf,
             telefone=telefone,
             descricao_servicos=descricao_servicos,
             aprovado_pelo_admin=False
@@ -35,8 +35,8 @@ class RepositorioProfissional:
     def buscar_por_usuario_id(self, usuario_id: int) -> ModeloProfissional | None:
         return self.sessao.query(ModeloProfissional).filter(ModeloProfissional.usuario_id == usuario_id).first()
 
-    def buscar_por_documento(self, documento: str) -> ModeloProfissional | None:
-        return self.sessao.query(ModeloProfissional).filter(ModeloProfissional.documento == documento).first()
+    def buscar_por_cpf(self, cpf: str) -> ModeloProfissional | None:
+        return self.sessao.query(ModeloProfissional).filter(ModeloProfissional.cpf == cpf).first()
 
     def listar(self) -> list[ModeloProfissional]:
         return self.sessao.query(ModeloProfissional).all()

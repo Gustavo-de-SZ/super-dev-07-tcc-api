@@ -11,7 +11,6 @@ class ModeloCliente(ModeloBase):
     
     nome_completo = Column(String(255), nullable=False)
     telefone = Column(String(20), nullable=False)
-    cpf = Column(String(14), unique=True, nullable=True)
 
     usuario = relationship("ModeloUsuario", back_populates="cliente")
     chamados = relationship("ModeloChamado", back_populates="cliente")

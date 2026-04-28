@@ -6,7 +6,7 @@ class RepositorioCliente:
     def __init__(self, sessao: Session):
         self.sessao = sessao
 
-    def criar(self, email: str, senha_hash: str, nome_completo: str, telefone: str, cpf: str | None = None) -> ModeloCliente:
+    def criar(self, email: str, senha_hash: str, nome_completo: str, telefone: str) -> ModeloCliente:
         usuario = ModeloUsuario(
             email=email,
             senha_hash=senha_hash,
@@ -19,8 +19,7 @@ class RepositorioCliente:
         cliente = ModeloCliente(
             usuario_id=usuario.id,
             nome_completo=nome_completo,
-            telefone=telefone,
-            cpf=cpf
+            telefone=telefone
         )
         self.sessao.add(cliente)
         self.sessao.commit()

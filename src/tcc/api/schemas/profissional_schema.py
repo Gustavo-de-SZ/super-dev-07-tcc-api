@@ -5,7 +5,7 @@ class ProfissionalCriarRequest(BaseModel):
     email: EmailStr
     senha: str
     nome_fantasia: str
-    documento: str
+    cpf: str
     telefone: str
     descricao_servicos: str | None = None
 
@@ -13,7 +13,7 @@ class ProfissionalResponse(BaseModel):
     id: int
     usuario_id: int
     nome_fantasia: str
-    documento: str
+    cpf: str
     telefone: str
     descricao_servicos: str | None = None
     aprovado_pelo_admin: bool

@@ -28,8 +28,7 @@ def criar_cliente(
             email=dados.email,
             senha_hash=dados.senha,
             nome_completo=dados.nome_completo,
-            telefone=dados.telefone,
-            cpf=dados.cpf
+            telefone=dados.telefone
         )
         return cliente
     except IntegrityError as e:
@@ -38,11 +37,6 @@ def criar_cliente(
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
                 detail="Email já cadastrado"
-            )
-        elif "cpf" in str(e):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="CPF já cadastrado"
             )
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
