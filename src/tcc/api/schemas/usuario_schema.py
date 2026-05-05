@@ -3,7 +3,7 @@ from enum import Enum
 
 class TipoPerfil(str, Enum):
     CLIENTE = "CLIENTE"
-    TECNICO = "TECNICO" 
+    PROFISSIONAL = "PROFISSIONAL" 
     ADMIN = "ADMIN"
 
 class UsuarioCriarRequest(BaseModel):

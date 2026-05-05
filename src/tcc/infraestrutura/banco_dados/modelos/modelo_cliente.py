@@ -13,4 +13,4 @@ class ModeloCliente(ModeloBase):
     telefone = Column(String(20), nullable=False)
 
     usuario = relationship("ModeloUsuario", back_populates="cliente")
-    chamados = relationship("ModeloChamado", back_populates="cliente")
+    #chamados = relationship("ModeloChamado", back_populates="cliente")

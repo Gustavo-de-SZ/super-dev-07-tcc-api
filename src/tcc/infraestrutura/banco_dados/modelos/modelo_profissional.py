@@ -15,4 +15,4 @@ class ModeloProfissional(ModeloBase):
     aprovado_pelo_admin = Column(Boolean, default=False)
 
     usuario = relationship("ModeloUsuario", back_populates="profissional")
-    itens_inventario = relationship("ModeloInventario", back_populates="profissional")
+   # itens_inventario = relationship("ModeloInventario", back_populates="profissional")

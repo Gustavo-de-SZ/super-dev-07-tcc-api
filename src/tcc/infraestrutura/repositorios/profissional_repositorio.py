@@ -10,7 +10,7 @@ class RepositorioProfissional:
         usuario = ModeloUsuario(
             email=email,
             senha_hash=senha_hash,
-            tipo_perfil=TipoPerfil.TECNICO,
+            tipo_perfil=TipoPerfil.PROFISSIONAL,
             ativo=True
         )
         self.sessao.add(usuario)

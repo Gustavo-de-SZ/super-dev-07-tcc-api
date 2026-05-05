@@ -14,4 +14,4 @@ class ModeloInventario(ModeloBase):
     preco_unitario = Column(Numeric(10, 2), nullable=True) 
     codigo_barras = Column(String(50), nullable=True)
 
-    profissional = relationship("ModeloProfissional", back_populates="itens_inventario")
+#    profissional = relationship("ModeloProfissional", back_populates="itens_inventario")

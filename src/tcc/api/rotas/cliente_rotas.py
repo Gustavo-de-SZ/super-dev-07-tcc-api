@@ -30,7 +30,17 @@ def criar_cliente(
             nome_completo=dados.nome_completo,
             telefone=dados.telefone
         )
-        return cliente
+        
+       
+        return ClienteResponse(
+            id=cliente.id,
+            usuario_id=cliente.usuario_id,
+            nome_completo=cliente.nome_completo,
+            telefone=cliente.telefone,
+            criado_em=cliente.criado_em,
+            email=cliente.usuario.email, 
+            ativo=cliente.usuario.ativo   
+        )
     except IntegrityError as e:
         session.rollback()
         if "email" in str(e):
@@ -58,7 +68,18 @@ def criar_cliente(
 def listar_clientes(session: Session = Depends(obter_sessao)):
     repositorio = RepositorioCliente(session)
     clientes = repositorio.listar()
-    return clientes
+    return [
+        ClienteResponse(
+            id=cliente.id,
+            usuario_id=cliente.usuario_id,
+            nome_completo=cliente.nome_completo,
+            telefone=cliente.telefone,
+            criado_em=cliente.criado_em,
+            email=cliente.usuario.email, 
+            ativo=cliente.usuario.ativo   
+        ) 
+        for cliente in clientes
+    ]
 
 @router.get(
     "/{id}",

@@ -22,7 +22,6 @@ def criar_profissional(
     dados: ProfissionalCriarRequest,
     session: Session = Depends(obter_sessao)
 ):
-    try:
         repositorio = RepositorioProfissional(session)
         profissional = repositorio.criar(
             email=dados.email,
@@ -32,29 +31,19 @@ def criar_profissional(
             telefone=dados.telefone,
             descricao_servicos=dados.descricao_servicos
         )
-        return profissional
-    except IntegrityError as e:
-        session.rollback()
-        if "email" in str(e):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Email já cadastrado"
-            )
-        elif "cpf" in str(e):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="CPF já cadastrado"
-            )
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Erro ao criar profissional: dados duplicados"
+        return ProfissionalResponse(
+            id=profissional.id,
+            usuario_id=profissional.usuario_id,
+            nome_fantasia=profissional.nome_fantasia,
+            cpf=profissional.cpf,
+            telefone=profissional.telefone,
+            descricao_servicos=profissional.descricao_servicos,
+            aprovado_pelo_admin=profissional.aprovado_pelo_admin,
+            criado_em=profissional.criado_em,
+            email=profissional.usuario.email
         )
-    except Exception as e:
-        session.rollback()
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Erro ao criar profissional: {str(e)}"
-        )
+    
+
 
 @router.get(
     "",
@@ -65,7 +54,20 @@ def criar_profissional(
 def listar_profissionais(session: Session = Depends(obter_sessao)):
     repositorio = RepositorioProfissional(session)
     profissionais = repositorio.listar()
-    return profissionais
+    return [
+        ProfissionalResponse(
+            id=profissional.id,
+            usuario_id=profissional.usuario_id,
+            nome_fantasia=profissional.nome_fantasia,
+            cpf=profissional.cpf,
+            telefone=profissional.telefone,
+            descricao_servicos=profissional.descricao_servicos,
+            aprovado_pelo_admin=profissional.aprovado_pelo_admin,
+            criado_em=profissional.criado_em,
+            email=profissional.usuario.email
+        )
+        for profissional in profissionais
+    ]
 
 @router.get(
     "/aprovados",
@@ -76,7 +78,20 @@ def listar_profissionais(session: Session = Depends(obter_sessao)):
 def listar_profissionais_aprovados(session: Session = Depends(obter_sessao)):
     repositorio = RepositorioProfissional(session)
     profissionais = repositorio.listar_aprovados()
-    return profissionais
+    return [
+        ProfissionalResponse(
+            id=profissional.id,
+            usuario_id=profissional.usuario_id,
+            nome_fantasia=profissional.nome_fantasia,
+            cpf=profissional.cpf,
+            telefone=profissional.telefone,
+            descricao_servicos=profissional.descricao_servicos,
+            aprovado_pelo_admin=profissional.aprovado_pelo_admin,
+            criado_em=profissional.criado_em,
+            email=profissional.usuario.email
+        )
+        for profissional in profissionais
+    ]
 
 @router.get(
     "/{id}",
@@ -92,7 +107,17 @@ def buscar_profissional(id: int, session: Session = Depends(obter_sessao)):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Profissional não encontrado"
         )
-    return profissional
+    return ProfissionalResponse(
+        id=profissional.id,
+        usuario_id=profissional.usuario_id,
+        nome_fantasia=profissional.nome_fantasia,
+        cpf=profissional.cpf,
+        telefone=profissional.telefone,
+        descricao_servicos=profissional.descricao_servicos,
+        aprovado_pelo_admin=profissional.aprovado_pelo_admin,
+        criado_em=profissional.criado_em,
+        email=profissional.usuario.email
+    )
 
 @router.patch(
     "/{id}/aprovar",

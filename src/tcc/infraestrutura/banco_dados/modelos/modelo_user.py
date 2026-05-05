@@ -5,7 +5,7 @@ from .modelo_base import Base
 
 class TipoPerfil(enum.Enum):
     CLIENTE = "CLIENTE"
-    TECNICO = "TECNICO"
+    PROFISSIONAL = "PROFISSIONAL"
     ADMIN = "ADMIN"
 
 class ModeloUsuario(Base):
