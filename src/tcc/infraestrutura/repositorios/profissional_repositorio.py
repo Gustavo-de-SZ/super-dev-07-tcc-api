@@ -6,7 +6,7 @@ class RepositorioProfissional:
     def __init__(self, sessao: Session):
         self.sessao = sessao
 
-    def criar(self, email: str, senha_hash: str, nome_fantasia: str, cpf: str, telefone: str, descricao_servicos: str | None = None) -> ModeloProfissional:
+    def criar(self, email: str, senha_hash: str | None, nome_fantasia: str | None = None, cpf: str | None = None, telefone: str | None = None, descricao_servicos: str | None = None) -> ModeloProfissional:
         usuario = ModeloUsuario(
             email=email,
             senha_hash=senha_hash,
@@ -15,7 +15,7 @@ class RepositorioProfissional:
         )
         self.sessao.add(usuario)
         self.sessao.flush()
-        
+
         profissional = ModeloProfissional(
             usuario_id=usuario.id,
             nome_fantasia=nome_fantasia,
@@ -48,14 +48,14 @@ class RepositorioProfissional:
         profissional = self.buscar_por_id(id)
         if not profissional:
             return False
-        
+
         if nome_fantasia:
             profissional.nome_fantasia = nome_fantasia
         if telefone:
             profissional.telefone = telefone
         if descricao_servicos:
             profissional.descricao_servicos = descricao_servicos
-        
+
         self.sessao.commit()
         return True
 
@@ -63,7 +63,7 @@ class RepositorioProfissional:
         profissional = self.buscar_por_id(id)
         if not profissional:
             return False
-        
+
         profissional.aprovado_pelo_admin = True
         self.sessao.commit()
         return True
@@ -72,7 +72,7 @@ class RepositorioProfissional:
         profissional = self.buscar_por_id(id)
         if not profissional:
             return False
-        
+
         profissional.aprovado_pelo_admin = False
         self.sessao.commit()
         return True
@@ -81,7 +81,7 @@ class RepositorioProfissional:
         profissional = self.buscar_por_id(id)
         if not profissional:
             return False
-        
+
         self.sessao.delete(profissional)
         self.sessao.commit()
         return True

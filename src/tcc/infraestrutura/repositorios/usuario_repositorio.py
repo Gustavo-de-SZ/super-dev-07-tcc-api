@@ -53,5 +53,11 @@ class RepositorioUsuario:
     def listar(self) -> list[ModeloUsuario]:
         return self.sessao.query(ModeloUsuario).order_by(ModeloUsuario.email).all()
 
+    def buscar_por_email(self, email: str) -> ModeloUsuario | None:
+        return self.sessao.query(ModeloUsuario).filter(ModeloUsuario.email == email).first()
+
     def buscar_por_id(self, id: int) -> ModeloUsuario | None:
         return self.sessao.query(ModeloUsuario).filter(ModeloUsuario.id == id).first()
+
+    def buscar_por_email(self, email: str) -> ModeloUsuario | None:
+        return self.sessao.query(ModeloUsuario).filter(ModeloUsuario.email == email).first()
